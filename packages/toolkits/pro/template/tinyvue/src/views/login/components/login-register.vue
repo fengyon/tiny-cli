@@ -79,7 +79,7 @@
 
   // 注册
   const { t } = useI18n();
-  const { loading, setLoading } = useLoading();
+  const [loading, setLoading] = useLoading();
   const ruleForm = ref();
 
   // 切换模式

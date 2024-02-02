@@ -73,7 +73,7 @@
 
   const router = useRouter();
   const { t } = useI18n();
-  const { loading, setLoading } = useLoading();
+  const [ loading, setLoading ] = useLoading();
   const userStore = useUserStore();
   const loginFormInfo = ref();
 
