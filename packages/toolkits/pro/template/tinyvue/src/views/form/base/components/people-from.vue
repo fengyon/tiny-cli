@@ -74,7 +74,6 @@
     ref,
     reactive,
     toRefs,
-    defineProps,
     computed,
     defineExpose,
   } from 'vue';

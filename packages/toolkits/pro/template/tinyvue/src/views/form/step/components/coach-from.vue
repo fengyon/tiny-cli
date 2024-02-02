@@ -110,7 +110,6 @@
   import {
     ref,
     reactive,
-    defineProps,
     computed,
     defineExpose,
     toRefs,

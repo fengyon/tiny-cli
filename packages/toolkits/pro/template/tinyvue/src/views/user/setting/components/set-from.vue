@@ -86,7 +86,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref, reactive, defineProps, computed, defineExpose } from 'vue';
+  import { ref, reactive, computed, defineExpose } from 'vue';
   import { useI18n } from 'vue-i18n';
   import {
     Select as TinySelect,

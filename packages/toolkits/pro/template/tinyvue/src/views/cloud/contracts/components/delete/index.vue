@@ -32,7 +32,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref, defineEmits, defineProps } from 'vue';
+  import { ref, defineEmits } from 'vue';
   import { useI18n } from 'vue-i18n';
   import {
     Input as TinyInput,

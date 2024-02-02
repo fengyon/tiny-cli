@@ -32,7 +32,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { reactive, toRefs, defineProps } from 'vue';
+  import { reactive, toRefs } from 'vue';
   import {
     Layout as TinyLayout,
     Form as TinyForm,
