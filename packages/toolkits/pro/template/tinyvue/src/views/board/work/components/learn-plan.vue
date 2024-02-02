@@ -1,6 +1,6 @@
 <template>
   <tiny-layout>
-    <tiny-row :flex="true" justify="center">
+    <tiny-row :flex="true" justify="center" align="middle">
       <tiny-col>
         <div class="col">
           <div class="title">

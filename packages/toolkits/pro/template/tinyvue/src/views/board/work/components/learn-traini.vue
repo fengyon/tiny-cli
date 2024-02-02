@@ -17,7 +17,7 @@
     </div>
 
     <tiny-layout>
-      <tiny-row :flex="true" justify="center" class="margin-bottom">
+      <tiny-row :flex="true" justify="center" align="middle" class="margin-bottom">
         <tiny-col :span="3">
           <div class="col">
             <div>
