@@ -6,7 +6,7 @@
       :show-filter="false"
       node-key="id"
       wrap
-      :default-expanded-keys="[expandeArr]"
+      :default-expanded-keys="expandeArr"
       @current-change="currentChange"
     >
       <template #default="slotScope">
@@ -22,7 +22,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { computed, watch, ref } from 'vue';
+  import { computed, watch, ref, onMounted } from 'vue';
   import { RouteRecordNormalized } from 'vue-router';
   import {
     IconDownloadCloud,
@@ -195,7 +195,7 @@
   const appRoute = computed(() => {
     return router
       .getRoutes()
-      .find((el) => el.name === 'root') as RouteRecordNormalized;
+      .find((el: { name: string; }) => el.name === 'root') as RouteRecordNormalized;
   });
   const copyRouter = JSON.parse(JSON.stringify(appRoute.value.children));
   copyRouter.sort((a: RouteRecordNormalized, b: RouteRecordNormalized) => {
@@ -220,7 +220,7 @@
 
   watch(
     role,
-    (newValue, oldValue) => {
+    (newValue: string) => {
       if (newValue === 'admin') {
         treeData.value = copyRouter;
       } else {
@@ -235,21 +235,19 @@
   /**
    * 监听路由变化高亮当前菜单
    */
-  watch(
-    () => router.currentRoute.value.path,
-    (newValue) => {
-      let data = newValue.split('/');
-      let result = data[data.length - 1];
-      const characters = [...result];
-      characters[0] = characters[0]?.toUpperCase();
-      expandeArr.value = characters.join('');
-      setTimeout(() => {
-        tree.value.$refs.tree.setCurrentNode({ id: expandeArr.value });
-      }, 0);
-    },
-    { immediate: true }
-  );
-
+  onMounted(() => {
+    watch(
+      () => router.currentRoute.value.path,
+      (newValue: string) => {
+        const menuKey = newValue
+          .replace(/^.*\//, '')
+          .replace(/^[a-z]/, (s: string) => s.toUpperCase());
+        expandeArr.value = [menuKey];
+        tree.value.setCurrentKey(menuKey);
+      },
+      { immediate: true },
+    );
+  });
   const currentChange = (data: any) => {
     const filter = [
       'Exception',
@@ -318,29 +316,29 @@
     }
   }
 
-  :deep(.tiny-tree-node__wrapper > .is-expanded > .tiny-tree-node__children 
+  :deep(.tiny-tree-node__wrapper > .is-expanded > .tiny-tree-node__children
   .tiny-tree-node__wrapper .is-current .tiny-tree-node__content .tree-node-name) {
     border-left: 2px solid var(--ti-tree-menu-square-left-border-color, '#fff') !important;
   }
 
-  :deep(.tiny-tree-node__wrapper > .is-expanded > .tiny-tree-node__children 
+  :deep(.tiny-tree-node__wrapper > .is-expanded > .tiny-tree-node__children
   .tiny-tree-node__wrapper .is-current .tiny-tree-node__content .tiny-tree-node__content-right) {
     background-color: var(--ti-tree-menu-node-hover-bg-color) !important;
   }
 
-  :deep(.tiny-tree-node__wrapper > .is-expanded > .tiny-tree-node__children 
-  .tiny-tree-node__wrapper .is-current .tiny-tree-node__content .tiny-tree-node__content-left 
+  :deep(.tiny-tree-node__wrapper > .is-expanded > .tiny-tree-node__children
+  .tiny-tree-node__wrapper .is-current .tiny-tree-node__content .tiny-tree-node__content-left
   .tiny-tree-node__content-box) {
     background-color: var(--ti-tree-menu-node-hover-bg-color) !important;
   }
 
-  :deep(.tiny-tree-node__wrapper > .is-expanded > .tiny-tree-node__children 
-  .tiny-tree-node__wrapper .is-current .tiny-tree-node__content .tiny-tree-node__content-left 
+  :deep(.tiny-tree-node__wrapper > .is-expanded > .tiny-tree-node__children
+  .tiny-tree-node__wrapper .is-current .tiny-tree-node__content .tiny-tree-node__content-left
   .tiny-tree-node__content-box:before) {
     display: none !important;
   }
 
-  :deep(.tiny-tree-node__wrapper > .is-expanded > .tiny-tree-node__children 
+  :deep(.tiny-tree-node__wrapper > .is-expanded > .tiny-tree-node__children
   .tiny-tree-node__wrapper .is-current .tiny-tree-node__content .tiny-tree-node__content-left:before) {
     display: none !important;
   }
@@ -357,7 +355,7 @@
     background-color: var(--ti-tree-node-content-hover-bg-color) !important;
   }
 
-  :deep(.tiny-tree-menu__wrap > .tiny-tree-node__wrapper > .is-root > .tiny-tree-node__content 
+  :deep(.tiny-tree-menu__wrap > .tiny-tree-node__wrapper > .is-root > .tiny-tree-node__content
   > .tiny-tree-node__content-left .tiny-tree-node__content-box .tree-node-name) {
     padding: 0 8px !important;
   }
