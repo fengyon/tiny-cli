@@ -7,7 +7,7 @@ const useAppStore = defineStore('app', {
 
   getters: {
     appCurrentSetting(state: AppState): AppState {
-      return { ...state };
+      return state;
     },
     appDevice(state: AppState) {
       return state.device;
